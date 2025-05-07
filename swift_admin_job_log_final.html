@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SWIFT Admin Portal - Job Log</title>
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px;
+        }
+        h1 {
+            color: #58a6ff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+        th, td {
+            padding: 12px 10px;
+            border: 1px solid #30363d;
+            text-align: left;
+        }
+        th {
+            background-color: #161b22;
+            color: #58a6ff;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: #161b22;
+        }
+        input, select, button {
+            padding: 10px;
+            margin: 5px 5px 10px 0;
+            border-radius: 4px;
+            border: 1px solid #30363d;
+            background-color: #0d1117;
+            color: #c9d1d9;
+        }
+        button {
+            background-color: #238636;
+            color: white;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #2ea043;
+            cursor: pointer;
+        }
+        .form-wrapper {
+            background-color: #161b22;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>SWIFT Admin Portal - Job Log</h1>
+
+<div class="form-wrapper">
+<form id="jobForm">
+    <input type="date" id="date" required>
+    <input type="text" id="description" placeholder="Job Description" required>
+    <input type="text" id="projectAmount" placeholder="Project Amount" required>
+    <input type="text" id="jobAmount" placeholder="Job Amount Earned" required>
+    <input type="text" id="chargedAmount" placeholder="What I Charged" required>
+    <select id="jobType" required>
+        <option value="">-- Type of Job --</option>
+        <option value="SWIFT Flash">SWIFT Flash</option>
+        <option value="Bank Login">Bank Login</option>
+        <option value="Interception">Interception</option>
+        <option value="Exploit">Exploit</option>
+        <option value="Other">Other</option>
+    </select>
+    <select id="status" required>
+        <option value="">-- Status --</option>
+        <option value="Successful">Successful</option>
+        <option value="Failed">Failed</option>
+    </select>
+    <button type="submit">Add Job</button>
+</form>
+</div>
+
+<table id="jobTable">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Project Amount</th>
+            <th>Job Amount Earned</th>
+            <th>What I Charged</th>
+            <th>Partner's 30%</th>
+            <th>Type of Job</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<script>
+    const form = document.getElementById('jobForm');
+    const tableBody = document.querySelector('#jobTable tbody');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const date = document.getElementById('date').value;
+        const desc = document.getElementById('description').value;
+        const projectAmount = document.getElementById('projectAmount').value;
+        const jobAmount = parseFloat(document.getElementById('jobAmount').value).toFixed(2);
+        const charged = parseFloat(document.getElementById('chargedAmount').value).toFixed(2);
+        const partnerShare = (charged * 0.3).toFixed(2);
+        const type = document.getElementById('jobType').value;
+        const status = document.getElementById('status').value;
+
+        const row = `<tr>
+                        <td>${date}</td>
+                        <td>${desc}</td>
+                        <td>${projectAmount}</td>
+                        <td>${jobAmount}</td>
+                        <td>${charged}</td>
+                        <td>${partnerShare}</td>
+                        <td>${type}</td>
+                        <td>${status}</td>
+                    </tr>`;
+        tableBody.innerHTML += row;
+        form.reset();
+    });
+</script>
+
+</body>
+</html>
